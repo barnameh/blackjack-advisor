@@ -1,5 +1,5 @@
 advice_data =
-{ "one_deck" =>
+{ "one deck" =>
   {
     "hard" =>
     [
@@ -168,14 +168,14 @@ advice_data =
 
 def get_value_for_card(card)
   case card.upcase
-  when "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
+  when "2", "3", "4", "5", "6", "7", "8", "9", "10"
     return card.to_i
   when "J", "Q", "K"
     return 10
   when "A"
     return 11
   else
-    return 0
+    return nil
   end
 end
 

@@ -148,22 +148,23 @@ advice_data =
           [ "P",  "P",  "P",  "P",  "P",  "P",  "H",  "H",  "H",  "H"],   #  3,3
           [ "H",  "H",  "H",  "P",  "P",  "H",  "H",  "H",  "H",  "H"],   #  4,4
           ["DH", "DH", "DH", "DH", "DH", "DH", "DH", "DH",  "H",  "H"],   #  5,5
-          ["QH",  "P",  "P",  "P",  "P",  "H",  "H",  "H",  "H",  "H"],   #  6,6
+          [ "P",  "P",  "P",  "P",  "P",  "H",  "H",  "H",  "H",  "H"],   #  6,6
           [ "P",  "P",  "P",  "P",  "P",  "P",  "H",  "H",  "H",  "H"],   #  7,7
           [ "P",  "P",  "P",  "P",  "P",  "P",  "P",  "P",  "P",  "P"],   #  8,8
           [ "P",  "P",  "P",  "P",  "P",  "S",  "P",  "P",  "S",  "S"],   #  9,9
           [ "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S"],   #  T,T
           [ "P",  "P",  "P",  "P",  "P",  "P",  "P",  "P",  "P",  "P"]    #  A,A
-          ];
+          ]
         }
       }
 
-advice_detail = { "H" =>	"Hit",
-  "S" => 	"Stand",
-  "P" =>	"Split",
-  "DH" =>	"Double if possible, otherwise Hit",
-  "DS" =>	"Double if possible, otherwise Stand"
-}
+ advice_detail =
+      { "H" =>	"Hit",
+        "S" => 	"Stand",
+        "P" =>	"Split",
+        "DH" =>	"Double if possible, otherwise Hit",
+        "DS" =>	"Double if possible, otherwise Stand"
+      }
 
 def get_value_for_card(card)
   case card.upcase
@@ -177,14 +178,9 @@ def get_value_for_card(card)
     return 0
   end
 end
-card1 = ""
-card2 = ""
-dealers_card = ""
-card1_value = 0
-card2_value = 0
-dealers_card_value = 0
+
 print "Please enter your first card : "
-loop do
+while true
   card1 = gets.chomp.upcase
   if card1_value = get_value_for_card(card1)
     break
@@ -192,7 +188,8 @@ loop do
     print "Please enter A, J, K, Q, or a value between 1 to 10"
   end
 end
-loop do
+
+while true
   print "Please enter your second card : "
   card2 = gets.chomp.upcase
   if card2_value = get_value_for_card(card2)
@@ -201,8 +198,9 @@ loop do
     print "Please enter A, J, K, Q, or a value between 1 to 10"
   end
 end
-loop do
-  print "Please enter your the dealer's card : "
+
+while true
+  print "Please enter the dealer's card : "
   dealers_card = gets.chomp.upcase
   if dealers_card_value = get_value_for_card(dealers_card)
     break
@@ -210,13 +208,25 @@ loop do
     print "Please enter A, J, K, Q, or a value between 1 to 10"
   end
 end
-puts "valid input card1 is #{card1} translated to #{card1_value}"
-puts "valid input card2 is #{card2} translated to #{card2_value}"
-puts "valid input dealers_card is #{dealers_card} translated to #{dealers_card_value}"
 
+while true
+  print "Please enter the number of decks - 1, 2, or 4 :"
+  case gets.chomp
+  when "1"
+    decks_key = "one deck"
+    break
+  when "2"
+    decks_key = "two decks"
+    break
+  when "4"
+    decks_key = "four or more decks"
+    break
+  else
+    print "please enter 1, 2, or 4"
+  end
+end
 
-
-if card1.eql?(card2) == true
+if card1.eql?(card2)
   hand_type = "pair"
   user_index = card1_value - 2
   dealer_index = dealers_card_value - 2
@@ -230,8 +240,9 @@ else
   dealer_index = dealers_card_value - 2
 end
 
-advice_key = advice_data[hand_type][user_index][dealer_index]
+advice_key = advice_data[decks_key][hand_type][user_index][dealer_index]
 
-puts " advice key is #{advice_key}"
-
+puts " "
 puts "Your optimal move is to #{advice_detail[advice_key]}."
+puts "Also, never take insurance or \"even money.\""
+puts " "
